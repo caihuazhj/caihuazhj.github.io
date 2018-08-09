@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="HashMap," />
 
 
 
@@ -77,17 +77,18 @@
 
 
 
-<meta name="description" content="Love Jing Enjoy Life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="heartbeat">
-<meta property="og:url" content="http://caihuazhj.com/heartbeat/index.html">
+<meta name="description" content="#HashMap面试常问知识点总结 是真滴重要 ###hashmap为什么是数组＋链表，不是数组加数组 数组的好处是可以根据下标快速的找到对应的元素。链表的好处在于添加、删除方便，不需要移动元素。 ###怎样减少hash碰撞，给出具体方案 使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的h">
+<meta name="keywords" content="HashMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMapp">
+<meta property="og:url" content="http://caihuazhj.com/2018/08/09/HashMap面试题总结/index.html">
 <meta property="og:site_name" content="Do What You Fell Like Fighting">
-<meta property="og:description" content="Love Jing Enjoy Life">
+<meta property="og:description" content="#HashMap面试常问知识点总结 是真滴重要 ###hashmap为什么是数组＋链表，不是数组加数组 数组的好处是可以根据下标快速的找到对应的元素。链表的好处在于添加、删除方便，不需要移动元素。 ###怎样减少hash碰撞，给出具体方案 使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-08T06:05:15.070Z">
+<meta property="og:updated_time" content="2018-08-09T03:29:32.960Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="heartbeat">
-<meta name="twitter:description" content="Love Jing Enjoy Life">
+<meta name="twitter:title" content="HashMapp">
+<meta name="twitter:description" content="#HashMap面试常问知识点总结 是真滴重要 ###hashmap为什么是数组＋链表，不是数组加数组 数组的好处是可以根据下标快速的找到对应的元素。链表的好处在于添加、删除方便，不需要移动元素。 ###怎样减少hash碰撞，给出具体方案 使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的h">
 
 
 
@@ -117,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://caihuazhj.com/heartbeat/"/>
+  <link rel="canonical" href="http://caihuazhj.com/2018/08/09/HashMap面试题总结/"/>
 
 
 
 
 
-  <title>heartbeat | Do What You Fell Like Fighting</title>
+  <title>HashMapp | Do What You Fell Like Fighting</title>
   
 
 
@@ -270,33 +271,269 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://caihuazhj.com/2018/08/09/HashMap面试题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FunkyFatJian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Do What You Fell Like Fighting">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">heartbeat</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">HashMapp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T11:18:23+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-09T11:29:32+08:00">
+                2018-08-09
+              </time>
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  804
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>#HashMap面试常问知识点总结</p>
+<p>是真滴重要</p>
+<p>###hashmap为什么是数组＋链表，不是数组加数组</p>
+<p>数组的好处是可以根据下标快速的找到对应的元素。链表的好处在于添加、删除方便，不需要移动元素。</p>
+<p>###怎样减少hash碰撞，给出具体方案</p>
+<p>使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的hashcode，这将提高整个获取对象的速度，使用String，Interger这样的wrapper类作为键是非常好的选择</p>
+<p>1.增大 <strong>映射空间/原空间</strong> 的大小</p>
+<p>2.尽可能把原数据集均匀映射到较小空间</p>
+<p>3.结合原空间数据的数据特征制定hash函数</p>
+<p>###数组为什么是连续存储的</p>
+<p>连续存储为了查找方便，HashMap此处使用空间换取时间</p>
+<p>###数组的初始长度为什么是16<br><em>此处仅仅为简单描述，不再详细记录</em></p>
+<ol>
+<li>jdk8中resize（）使用h &amp; (table.length - 1)，计算新索引的位置，如果结果是0，位置不变；如果结果是1，位置伟原索引+oldtable.length</li>
+<li>hashmap长度要求为2的n次幂，在第一点中，计算索引位置要求这样；另外，如果不是2的n次幂，容易产生冲突，并且分布不均匀。 </li>
+</ol>
+<p>###HashMap在并发情况下，会出现什么问题（为什么hashmap不是线程安全的）</p>
+<ol>
+<li><p>如果多个线程同时使用put方法添加元素</p>
+<p> 假设正好存在两个put的key发生了碰撞(hash值一样)，那么根据HashMap的实现，这两个key会添加到数组的同一个位置，这样最终就会发生其中一个线程的put的数据被覆盖。</p>
+</li>
+</ol>
+<ol>
+<li><p>如果多个线程同时检测到元素个数超过数组大小*loadFactor</p>
+<p> 这样会发生多个线程同时对hash数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给table，也就是说其他线程的都会丢失，并且各自线程put的数据也丢失。且会引起死循环的错误。</p>
+</li>
+</ol>
+<p>另外，在扩容时（resize（）），由于采用头插法，会使链表出现闭环。</p>
+<p>###HashMap参数</p>
+<p>#####容量参数：</p>
+<pre><code>static final int _DEFAULT\_INITIAL\_CAPACITY_ = 1 \&amp;lt;\&amp;lt; 4; // aka 16
+static final int _MAXIMUM\_CAPACITY_ = 1 \&amp;lt;\&amp;lt; 30;
+static final float _DEFAULT\_LOAD\_FACTOR_ = 0.75f;
+</code></pre><p>当entry的数量\&gt;= DEFAULT_INITIAL_CAPACITY* DEFAULT_LOAD_FACTOR时，扩容并且resize（）；</p>
+<p>#####树形化参数：</p>
+<pre><code>static final int _TREEIFY\_THRESHOLD_ = 8;
+static final int _UNTREEIFY\_THRESHOLD_ = 6;
+static final int _MIN\_TREEIFY\_CAPACITY_ = 64;
+</code></pre><p>#####TREEIFY与RESIZE</p>
+<p>当好多bin被映射到同一个桶时，如果这个桶中bin的数量小于TREEIFY_THRESHOLD当然不会转化成树形结构存储；</p>
+<p>如果这个桶中bin的数量大于了 TREEIFY_THRESHOLD ，但是capacity小于MIN_TREEIFY_CAPACITY 则依然使用链表结构进行存储，此时会对HashMap进行扩容；（为了避免进行扩容、树形化选择的冲突，这个值不能小于 4 * TREEIFY_THRESHOLD）</p>
+<p>如果capacity大于了MIN_TREEIFY_CAPACITY ，则会进行树化。</p>
+
       
     </div>
     
     
     
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HashMap/" rel="tag"> HashMap</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/Redis基础/" rel="next" title="Redis基础">
+                <i class="fa fa-chevron-left"></i> Redis基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
