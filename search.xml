@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title>JVM学习之GC与内存分配策略</title>
+      <link href="/2018/08/09/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BGC%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/"/>
+      <url>/2018/08/09/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BGC%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</url>
+      <content type="html"><![CDATA[<p>关于GC和内存分配，JAVA程序员觉得太重要了，千万不能自己管理。C++程序员觉得太重要了，一定要自己管理。</p><p>经过半个多世纪的发展，目前内存的动态分配与内存回收技术已经相当成熟，一切看起来都进入了“自动化”时代，那为什么我们还要去了解GC和内存分配呢？答案很简单：当需要排查各种内存溢出、 内存泄漏问题时，当垃圾收集成为系统达到更高并发量的瓶颈时，我们就需要对这些“自动化”的技术实施必要的监控和调节。</p><a id="more"></a><p>说起垃圾收集（Garbage Collection,GC），需要思考3件事情：</p><ul><li><p>哪些内存需要回收？</p></li><li><p>什么时候回收？</p></li><li><p>如何回收？</p></li></ul><hr><h2 id="对象已经死了吗"><a href="#对象已经死了吗" class="headerlink" title="对象已经死了吗"></a>对象已经死了吗</h2><p>判断方法</p><ol><li><p><strong>引用计数法：</strong>引用加1，失效减1，但是无法解决互相引用的问题</p></li><li><p><strong>可达性分析（GC Roots）：</strong>从GC Roots向下搜索不可达，并且经历两次标记后的就是不可用的。</p><p><strong>在Java语言中，可作为GC Roots的对象包括下面几种：</strong>  </p><ul><li>虚拟机栈（栈帧中的本地变量表）中引用的对象。  </li><li>方法区中类静态属性引用的对象。  </li><li>方法区中常量引用的对象。  </li><li>本地方法栈中JNI（即一般说的Native方法）引用的对象。</li></ul></li><li><p><strong>两次标记：是否有必要执行finalize（）方法：</strong>当对象没有覆盖finalize（）方法，或者finalize（）方法已经被虚拟机调用过，虚拟机将这两种情况都视为“没有必要执行”；如果有必要执行，则加入F-Queue中。（此处需要详细再学习）</p></li></ol><h2 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h2><p>主要用于废弃常量和无用的类。</p><ol><li>满足下面3个条件才能算是“无用的类”：</li></ol><pre><code>-  该类所有的实例都已经被回收，也就是Java堆中不存在类的任何实例。-  加载该类的ClassLoader已经被回收。-  该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</code></pre><h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><ol><li><p><strong>标记-清除法：</strong></p><p>字面意思，缺点为会产生碎片</p></li><li><p><strong>复制算法（空间代价大）：</strong></p><p>将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，默认康健8：1.当survivor空间不够用时，会依赖老年代进行担保。</p></li><li><p><strong>标记-整理算法：</strong></p><p>让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存</p><p><em>一般新生代使用复制算法，老年代使用另外两种。</em></p></li></ol><h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p><em>此处要补垃圾收集器图片</em></p><ol><li><strong>Serial/SerialOld收集器</strong></li></ol><pre><code>单线程，stop the world，适合client模式下的虚拟机</code></pre><ol start="2"><li><strong>ParNew收集器</strong></li></ol><pre><code>Serial的多线程版本，Server模式下首选的新生代收集器，目前只有他能和CMS配合工作。</code></pre><ol start="3"><li><strong>Parallel Scavenge/Parallel Old收集器</strong></li></ol><pre><code>关注吞吐量</code></pre><ol start="4"><li><p><strong>CMS收集器</strong></p><p>以获得最短回收停顿时间为目标，基于标记-清除算法</p><p><strong>步骤：</strong></p><p>初始标记：stop the world</p><p>并发标记：耗时</p><p>重新标记：stop the world</p><p>并发清除：耗时</p></li></ol><pre><code>**缺点：**对CPU资源敏感，无法处理浮动垃圾，碎片</code></pre><ol start="5"><li><p><strong>G1收集器</strong></p><p><strong>特点：</strong>并行与并发（使用多个CPU缩短stop-the-world的时间）、分代收集、空间整合（整体看来标记-整理，局部（Region）来看复制算法）、可预测的停顿。</p><p><strong>Region：</strong>使用G1收集器时，Java堆的内存布局就与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分Region（不需要连续）的集合。同时每一个region有一个RememberedSet来避免全盘扫描。</p><p><strong>步骤：</strong>初始标记、并发标记、最终标记、筛选回收</p></li><li><p><strong>GC日志</strong></p><p><em>笔记未记录</em></p></li></ol><h2 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h2><ol><li><strong>MinorGC与FullGC</strong></li></ol><pre><code>**新生代GC（MinorGC）：**指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。  **老年代GC（Major GC/Full GC）：**指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。 Major GC的速度一般会比Minor GC慢10倍以上。</code></pre><ol><li><p><strong>内存分配策略</strong></p><ol><li><p>优先在新生代eden上分配（多线程时在TLAB上分配）</p></li><li><p>大对象直接进入老年代，大对象指长字符串或数组；</p></li><li><p>对于经过Minor GC后，survivor能接收的将被移到survivor中，并且年龄加1，否则分配到老年代中去；默认15岁进入老年代（如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代）；</p></li><li><p>空间分配担保</p><p>在发生Minor GC之前，虚拟机会先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果这个条件成立，那么Minor GC可以确保是安全的。如果不成立，则虚拟机会查看HandlePromotionFailure设置值是否允许担保失败。 如果允许，那么会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次Minor GC，尽管这次Minor GC是有风险的；如果小于，或者HandlePromotionFailure设置不允许冒险，那这时也要改为进行一次Full GC。</p></li></ol></li></ol>]]></content>
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JVM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JVM学习之JAVA内存区域</title>
+      <link href="/2018/08/09/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BJAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/"/>
+      <url>/2018/08/09/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BJAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</url>
+      <content type="html"><![CDATA[<p>对于Java程序员来说，在虚拟机自动内存管理机制的帮助下，不再需要为每一个new操作去写配对的delete/free代码，不容易出现内存泄漏和内存溢出问题，由虚拟机管理内存这一切看起来都很美好。 不过，也正是因为Java程序员把内存控制的权力交给了Java虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会成为一项异常艰难的工作。</p><a id="more"></a><h2 id="JAVA内存区域"><a href="#JAVA内存区域" class="headerlink" title="JAVA内存区域"></a>JAVA内存区域</h2><p>图片位置</p><p>JAVA内存区域可分为如下几部分：方法区、java堆、Java栈、本地方法栈、程序计数器、直接内存</p><h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>当前线程所执行的字节码的行号指示器。如果线程正在执行JAVA方法，记录虚拟机字节码指令的地址；如果是Native方法，则为空。没有OutOfMemoeryRrror</p><h3 id="Java虚拟机栈（java栈）"><a href="#Java虚拟机栈（java栈）" class="headerlink" title="Java虚拟机栈（java栈）"></a>Java虚拟机栈（java栈）</h3><p>描述的是Java方法执行的内存模型：每个方法在执行的同时会创建一个栈帧（stackframe）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。 OutOfMemoeryRrror/StackOverFlowError.</p><p>局部变量表存放了编译期可知的各种基本数据类型（boolean、 byte、 char、short、 int、float、 long、 double）、对象引用（reference类型，它不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置）和returnAddress类型（指向了一条字节码指令的地址）。</p><p>其中64位长度的long和double类型的数据会占用2个局部变量空间（Slot），其余的数据类型只占用1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p><h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>虚拟机使用到的native方法服务，没有强制规定OutOfMemoeryRrror/StackOverFlowError.</p><h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>JAVA堆是java虚拟机所管理的内存的最大的一块，唯一目的是存放对象实例。</p><blockquote><p>虚拟机规范原文：The heap is the runtime data area from which memory for all classinstances and arrays isallocated。</p></blockquote><p><strong>java堆是垃圾收集管理的主要区域</strong>，可细分为新生代（Eden空间，from survivor，to survivor）和老年代。对于线程共享可划分出多个线程共享的分配缓冲区TLAB。Java堆可以处于物理上不连续的内存空间中，只要逻辑上连续即可。空间可通过-Xmx，-Xms控制。OutOfMemoeryRrror</p><h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>   各线程共享，存储以背虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。程序员更愿意把这里称为永久代，但是在jdk8中，已将永久代移除，改为元空间，不在虚拟机分配内存，而使用本地内存。OutOfMemoeryRrror</p><h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>是方法区的一部分，用于存放编译期生成的各种字面量和符号引用。具有动态性，在程序运行期间也可以将新的常量放入池中。（String类的intern（）方法）。</p><h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>不是虚拟机运行时数据区的一部分，可以通过NI/O的Channel和Buffer的I/O方式直接分配堆外内存，使用DirectByteBuffer作为这块内存的引用进行操作。</p><h2 id="HotSpot虚拟机对象探秘"><a href="#HotSpot虚拟机对象探秘" class="headerlink" title="HotSpot虚拟机对象探秘"></a>HotSpot虚拟机对象探秘</h2><p><em>此处指虚拟机执行类加载过程之后，为对象分配内存的过程，内容包括分配方法及对象的内存布局，具体的类加载过程在后面的笔记中会有整理。</em></p><h3 id="通过new创建的对象"><a href="#通过new创建的对象" class="headerlink" title="通过new创建的对象"></a>通过new创建的对象</h3><p>虚拟机遇到new指令时，首先会执行类加载过程，然后为新生对象分配内存初始化零值进行必要设置，然后java程序才会执行init方法</p><h4 id="分配内存方法"><a href="#分配内存方法" class="headerlink" title="分配内存方法"></a>分配内存方法</h4><ol><li><p>指针碰撞，空闲列表</p></li><li><p>并发条件下：解决这个问题有两种方案：</p><ol><li><p>对分配内存空间的动作进行同步处理——实际上虚拟机采用CAS配上失败重试的方式保证更新操作的原子性</p></li><li><p>把内存分配的动作按照线程划分在不同的空间之中进行，即每个线程在Java堆中预先分配一小块内存，称为本地线程分配缓冲（Thread Local Allocation Buffer,TLAB）。哪个线程要分配内存，就在哪个线程的TLAB上分配，只有TLAB用完并分配新的TLAB时，才需要同步锁定。虚拟机是否使用TLAB，可以通过-XX：+/-UseTLAB参数来设定。</p></li></ol></li></ol><h4 id="初始化零值"><a href="#初始化零值" class="headerlink" title="初始化零值"></a>初始化零值</h4><p>  保证对象的实例字段在JAVA代码中可以不赋初始值直接使用。</p><h4 id="虚拟机对对象进行必要设置"><a href="#虚拟机对对象进行必要设置" class="headerlink" title="虚拟机对对象进行必要设置"></a>虚拟机对对象进行必要设置</h4><p>  例如这个对象是哪个类的实例、 如何才能找到类的元数据信息、 对象的哈希码、对象的GC分代年龄等信息。 这些信息存放在对象的对象头（Object Header）之中。根据虚拟机当前的运行状态的不同，如是否启用偏向锁等，对象头会有不同的设置方式。</p><h3 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h3><h4 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h4><ol><li><p>第一部分用于<strong>存储对象自身的运行时数据</strong>，如哈希码（HashCode）、GC分代年龄、 锁状态标志、 线程持有的锁、 偏向线程ID、偏向时间戳等，这部分数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为32bit和64bit，官方称它为“Mark Word”。</p></li><li><p><strong>类型指针：</strong>即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p></li></ol><h4 id="实例数据"><a href="#实例数据" class="headerlink" title="实例数据"></a>实例数据</h4><p>实例数据部分时对象真正存储的有效信息，也就是各个字段的内容：HotSpot虚拟机默认的分配策略为longs/doubles、ints、 shorts/chars、bytes/booleans、 oops（Ordinary Object Pointers），从分配策略中可以看出，相同宽度的字段总是被分配到一起。在满足这个前提条件的情况下，在父类中定义的变量会出现在子类之前。如果CompactFields参数值为true（默认为true），那么子类之中较窄的变量也可能会插入到父类变量的空隙之中。</p><h4 id="对齐填充"><a href="#对齐填充" class="headerlink" title="对齐填充"></a>对齐填充</h4><p>   HotSpotVM的自动内存管理系统要求对象起始地址必须时8字节的整数倍。</p><h3 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h3><p><em>未整理，后续补充</em></p>]]></content>
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JVM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>JAVA基础之Object类学习及公共方法整理</title>
       <link href="/2018/08/09/JAVA%E5%9F%BA%E7%A1%80%E4%B9%8BObject%E7%B1%BB%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%85%AC%E5%85%B1%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86/"/>
       <url>/2018/08/09/JAVA%E5%9F%BA%E7%A1%80%E4%B9%8BObject%E7%B1%BB%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%85%AC%E5%85%B1%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86/</url>
