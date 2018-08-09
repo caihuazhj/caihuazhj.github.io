@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。">
+<meta name="description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。Redis 是一个使用 C 语言写成的，开源的 key-value 数据库。。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis基础">
 <meta property="og:url" content="http://caihuazhj.com/2018/08/08/Redis基础/index.html">
 <meta property="og:site_name" content="Do What You Fell Like Fighting">
-<meta property="og:description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。">
+<meta property="og:description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。Redis 是一个使用 C 语言写成的，开源的 key-value 数据库。。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-08T07:14:36.075Z">
+<meta property="og:updated_time" content="2018-08-09T10:51:45.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis基础">
-<meta name="twitter:description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。">
+<meta name="twitter:description" content="RedisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。Redis 是一个使用 C 语言写成的，开源的 key-value 数据库。。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop">
 
 
 
@@ -328,8 +328,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-08T15:14:36+08:00">
-                2018-08-08
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-09T18:51:45+08:00">
+                2018-08-09
               </time>
             
           </span>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  415
+                  4,173
                 </span>
               
 
@@ -408,24 +408,14 @@
       
 
       
-        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。<br><a id="more"></a><br>Redis 与其他 key - value 缓存产品有以下三个特点：</p>
-<ul>
-<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
-<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
-<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
-</ul>
+        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。<br>Redis 是一个使用 C 语言写成的，开源的 key-value 数据库。。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。目前，Vmware在资助着redis项目的开发和维护。 </p>
+<p>目前没有图片<br><a id="more"></a></p>
 <hr>
-<h2 id="Redis-简介"><a href="#Redis-简介" class="headerlink" title="Redis 简介"></a>Redis 简介</h2><p>Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。<br>Redis 与其他 key - value 缓存产品有以下三个特点：</p>
-<ul>
-<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
-<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
-<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
-</ul>
 <h2 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h2><ul>
-<li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li>
-<li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li>
-<li>原子 – Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</li>
-<li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li>
+<li><strong>性能极高</strong> Redis能读的速度是110000次/s,写的速度是81000次/s 。</li>
+<li><strong>丰富的数据类型</strong> Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li>
+<li><strong>原子</strong> Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</li>
+<li><strong>丰富的特性</strong> Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li>
 </ul>
 <h2 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h2><ul>
 <li>String</li>
@@ -434,6 +424,168 @@
 <li>Set</li>
 <li>ZSet</li>
 </ul>
+<h2 id="Redis底层数据结构"><a href="#Redis底层数据结构" class="headerlink" title="Redis底层数据结构"></a>Redis底层数据结构</h2><h3 id="简单动态字符串SDS"><a href="#简单动态字符串SDS" class="headerlink" title="简单动态字符串SDS"></a>简单动态字符串SDS</h3><h4 id="简单动态字符串结构"><a href="#简单动态字符串结构" class="headerlink" title="简单动态字符串结构"></a>简单动态字符串结构</h4><ol>
+<li><p>len变量，用于记录buf中已经使用的空间长度（这里指出Redis的长度为5）</p>
+</li>
+<li><p>free变量，用于记录buf中还空余的空间（初次分配空间，一般没有空余，在对字符串修改的时候，会有剩余空间出现）</p>
+</li>
+<li><p>buf字符数组，用于记录我们的字符串（记录Redis）</p>
+</li>
+</ol>
+<h4 id="SDS与C字符串的区别"><a href="#SDS与C字符串的区别" class="headerlink" title="SDS与C字符串的区别"></a>SDS与C字符串的区别</h4><ol>
+<li><p><strong>获取字符串长度（SDSO（1）/C字符串O(n)）</strong></p>
+<p>传统的C字符串使用长度为N+1的字符串数组来表示长度为N的字符串，所以为了获取一个长度为C字符串的长度，必须遍历整个字符串。</p>
+<p>和C字符串不同，SDS的数据结构中，有专门用于保存字符串长度的变量，我们可以通过获取len属性的值，直接知道字符串长度。</p>
+</li>
+<li><p><strong>杜绝缓冲区溢出</strong></p>
+<p>当我们需要对一个SDS进行修改的时候，redis会在执行拼接操作之前，预先检查给定SDS空间是否足够，如果不够，会先拓展SDS的空间，然后再执行拼接操作</p>
+</li>
+<li><p><strong>减少修改字符串时带来的内存重分配次数</strong></p>
+<p>预分配策略，SDS将连续增长N次字符串所需的内存重分配次数从必定N次降低为最多N次</p>
+</li>
+<li><p><strong>惰性空间释放</strong></p>
+<p>我们在观察SDS的结构的时候可以看到里面的free属性，是用于记录空余空间的。我们除了在拓展字符串的时候会使用到free来进行记录空余空间以外，在对字符串进行收缩的时候，我们也可以使用free属性来进行记录剩余空间，这样做的好处就是避免下次对字符串进行再次修改的时候，需要对字符串的空间进行拓展。</p>
+<p>然而，我们并不是说不能释放SDS中空余的空间，SDS提供了相应的API，让我们可以在有需要的时候，自行释放SDS的空余空间。</p>
+<p>通过惰性空间释放，SDS避免了缩短字符串时所需的内存重分配操作，并未将来可能有的增长操作提供了优化</p>
+</li>
+<li><p><strong>二进制安全</strong></p>
+<p>Redis中，不是靠空字符来判断字符串的结束的，而是通过len这个属性。那么，即便是中间出现了空字符对于SDS来说，读取该字符仍然是可以的。</p>
+</li>
+<li><p><strong>兼容部分C字符串函数</strong></p>
+<p>虽然SDS的API都是二进制安全的，但他们一样遵循C字符串以空字符串结尾的惯例。</p>
+</li>
+</ol>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>链表在Redis中的应用非常广泛，比如列表键的底层实现之一就是链表。当一个列表键包含了数量较多的元素，又或者列表中包含的元素都是比较长的字符串时，Redis就会使用双向链表作为列表键的底层实现。</p>
+<p>链表的特性</p>
+<ul>
+<li><p>双端：链表节点带有prev和next指针，获取某个节点的前置节点和后置节点的时间复杂度都是O（N）</p>
+</li>
+<li><p>无环：表头节点的prev指针和表尾节点的next都指向NULL，对立案表的访问时以NULL为截止</p>
+</li>
+<li><p>表头和表尾：因为链表带有head指针和tail指针，程序获取链表头结点和尾节点的时间复杂度为O(1)</p>
+</li>
+<li><p>长度计数器：链表中存有记录链表长度的属性len</p>
+</li>
+<li><p>多态：链表节点使用void*指针来保存节点值，并且可以通过list结构的dup、free、match三个属性为节点值设置类型特定函数。</p>
+</li>
+</ul>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对的抽象数据结构。　</p>
+<p>在字典中，一个键（key）可以和一个值（value）进行关联，字典中的每个键都是独一无二的。在C语言中，并没有这种数据结构，但是Redis<br>中构建了自己的字典实现。</p>
+<p>Key的存储为hash值，利用拉链法解决hash冲突 。</p>
+<p>哈希表空间分配规则：</p>
+<p>如果执行的是拓展操作，那么ht[1] 的大小为第一个大于等于ht[0] 的2的n次幂</p>
+<p>如果执行的是收缩操作，那么ht[1] 的大小为第一个大于等于ht[0] 的2的n次幂</p>
+<h4 id="Rehash"><a href="#Rehash" class="headerlink" title="Rehash"></a>Rehash</h4><h5 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h5><p>在实际开发过程中，rehash<br>操作并不是一次性、集中式完成的，而是分多次、渐进式地完成的。</p>
+<p>渐进式rehash 的详细步骤：</p>
+<p>1、为ht[1] 分配空间，让字典同时持有ht[0]和ht[1]两个哈希表</p>
+<p>2、在几点钟维持一个索引计数器变量rehashidx，并将它的值设置为0，表示rehash 开始</p>
+<p>3、在rehash<br>进行期间，每次对字典执行CRUD操作时，程序除了执行指定的操作以外，还会将ht[0]中的数据rehash<br>到ht[1]表中，并且将rehashidx加一</p>
+<p>4、当ht[0]中所有数据转移到ht[1]中时，将rehashidx 设置成-1，表示rehash 结束</p>
+<p>采用渐进式rehash 的好处在于它采取分而治之的方式，避免了集中式rehash<br>带来的庞大计算量。</p>
+<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><p>跳跃表（skiplist）是一种有序数据结构，它通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。跳跃表是一种随机化的数据,跳跃表以有序的方式在层次化的链表中保存元素，效率和平衡树媲美<br>——查找、删除、添加等操作都可以在对数期望时间下完成，并且比起平衡树来说，跳跃表的实现要简单直观得多。</p>
+<p>Redis只在两个地方用到了跳跃表，一个是实现有序集合键，另外一个是在集群节点中用作内部数据结构。</p>
+<ul>
+<li><p>跳跃表是有序集合的底层实现之一</p>
+</li>
+<li><p>主要有zskiplist 和zskiplistNode两个结构组成</p>
+</li>
+<li><p>每个跳跃表节点的层高都是1至32之间的随机数</p>
+</li>
+<li><p>在同一个跳跃表中，多个节点可以包含相同的分值，但每个节点的对象必须是唯一的</p>
+</li>
+<li><p>节点按照分值的大小从大到小排序，如果分值相同，则按成员对象大小排序</p>
+</li>
+</ul>
+<h3 id="整数集合"><a href="#整数集合" class="headerlink" title="整数集合"></a>整数集合</h3><p>intset在默认情况下会帮我们设定整数集合中的编码方式，但是当我们存入的整数不符合整数集合中的编码格式时，就需要使用到Redis中的升级策略来解决</p>
+<p>1、encoding：用于定义整数集合的编码方式</p>
+<p>2、length：用于记录整数集合中变量的数量</p>
+<p>3、contents：用于保存元素的数组，虽然我们在数据结构图中看到，intset将数组定义为int8_t，但实际上数组保存的元素类型取决于encoding</p>
+<p>在上述数据结构图中我们可以看到，intset在默认情况下会帮我们设定整数集合中的编码方式，但是当我们存入的整数不符合整数集合中的编码格式时，就需要使用到Redis中的升级策略来解决</p>
+<p>Intset 中升级整数集合并添加新元素共分为三步进行：</p>
+<ol>
+<li><p>根据新元素的类型，扩展整数集合底层数组的空间大小，并为新元素分配空间</p>
+</li>
+<li><p>将底层数组现有的所有元素都转换成新的编码格式，重新分配空间</p>
+</li>
+<li><p>将新元素加入到底层数组中</p>
+</li>
+</ol>
+<p><strong>整数集合升级的好处</strong></p>
+<p>1、提升灵活性</p>
+<p>2、节约内存</p>
+<h3 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h3><p>压缩列表是列表键和哈希键的底层实现之一。当一个列表键只把汗少量列表项，并且每个列表项要么就是小整数，要么就是长度比较短的字符串，那么Redis<br>就会使用压缩列表来做列表键的底层实现。</p>
+<p>1、zlbytes:用于记录整个压缩列表占用的内存字节数</p>
+<p>2、zltail：记录要列表尾节点距离压缩列表的起始地址有多少字节</p>
+<p>3、zllen：记录了压缩列表包含的节点数量。</p>
+<p>4、entryX：要说列表包含的各个节点</p>
+<p>5、zlend：用于标记压缩列表的末端</p>
+<p>压缩列表是一种为了节约内存而开发的顺序型数据结构</p>
+<p>压缩列表被用作列表键和哈希键的底层实现之一</p>
+<p>压缩列表可以包含多个节点，每个节点可以保存一个字节数组或者整数值</p>
+<p>添加新节点到压缩列表，可能会引发连锁更新操作。</p>
+<h2 id="Redis面试题"><a href="#Redis面试题" class="headerlink" title="Redis面试题"></a>Redis面试题</h2><h3 id="redis实现持久化的方式"><a href="#redis实现持久化的方式" class="headerlink" title="redis实现持久化的方式"></a>redis实现持久化的方式</h3><ol>
+<li>RDB持久化：将Reids在内存中的数据库记录定时dump到磁盘上的RDB持久化</li>
+<li>AOF持久化：将Reids的操作日志以追加的方式写入文件（append only file）</li>
+</ol>
+<h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p>   RDB持久化是指在指定的时间间隔内将内存中的数据集快照写入磁盘，实际操作过程是fork一个子进程，先将数据集写入临时文件，写入成功后，再替换之前的文件，用二进制压缩存储。保存文件名为dump.rdb。</p>
+<h5 id="RDB的优势"><a href="#RDB的优势" class="headerlink" title="RDB的优势"></a>RDB的优势</h5><ol>
+<li><p>RDB 是一个非常紧凑（compact）的文件，它保存了 Redis<br>在某个时间点上的数据集。非常适合备份及灾难性恢复；</p>
+</li>
+<li><p>性能最大化，它唯一需要做的只是fork出子进程，避免执行IO操作；</p>
+</li>
+<li><p>相比于AOF机制，如果数据集很大，RDB的启动效率会更高。</p>
+</li>
+</ol>
+<h5 id="RDB缺点"><a href="#RDB缺点" class="headerlink" title="RDB缺点"></a>RDB缺点</h5><ol>
+<li><p>如果你想保证数据的高可用性，即最大限度的避免数据丢失，那么RDB将不是一个很好的选择。因为系统一旦在定时持久化之前出现宕机现象，此前没有来得及写入磁盘的数据都将丢失。</p>
+</li>
+<li><p>由于RDB是通过fork子进程来协助完成数据持久化工作的，因此，如果当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至是1秒钟。</p>
+</li>
+</ol>
+<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p>AOF持久化以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记录，以文本的方式记录，可以打开文件看到详细的操作记录。</p>
+<h5 id="AOF优点"><a href="#AOF优点" class="headerlink" title="AOF优点"></a>AOF优点</h5><ol>
+<li><p>使用 AOF 持久化会让 Redis 变得非常耐久（much more durable）：Redis中提供了3中同步策略，即每秒同步（默认），每修改步和不同步。</p>
+</li>
+<li><p>由于该机制对日志文件的写入操作采用的是append模式，所以不需要seek，即使日志因为某些原因而包含了未写入完整的命令（比如写入时磁盘已满，写入中途停机，等等），redis-check-aof 工具也可以轻易地修复这种问题。</p>
+</li>
+<li><p>如果日志过大，Redis可以自动启用rewrite机制。即Redis以append模式不断的将修改数据写入到老的磁盘文件中，同时Redis还会创建一个新的文件用于记录此期间有哪些修改命令被执行。因此在进行rewrite切换时可以更好的保证数据安全性。</p>
+</li>
+<li><p>AOF包含一个格式清晰、易于理解的日志文件用于记录所有的修改操作。事实上，我们也可以通过该文件完成数据的重建。</p>
+</li>
+</ol>
+<h5 id="AOF缺点"><a href="#AOF缺点" class="headerlink" title="AOF缺点"></a>AOF缺点</h5><ol>
+<li><p>对于相同数量的数据集而言，AOF文件通常要大于RDB文件。RDB在恢复大数据集时的速度比 AOF 的恢复速度要快。</p>
+</li>
+<li><p>根据同步策略的不同，AOF在运行效率上往往会慢于RDB。</p>
+</li>
+</ol>
+<h3 id="redis与memcached对比"><a href="#redis与memcached对比" class="headerlink" title="redis与memcached对比"></a>redis与memcached对比</h3><p>参考：<a href="https://www.imooc.com/article/23549" target="_blank" rel="noopener">https://www.imooc.com/article/23549</a></p>
+<p>####二者定义</p>
+<p>Memcached：一款完全开源、高性能的、分布式的内存系统；</p>
+<p>Redis：一个开源的、Key-Value型、基于内存运行并支持持久化的NoSQL数据库；</p>
+<h4 id="各方面对比"><a href="#各方面对比" class="headerlink" title="各方面对比"></a>各方面对比</h4><h5 id="网络IO之间的对比"><a href="#网络IO之间的对比" class="headerlink" title="网络IO之间的对比"></a>网络IO之间的对比</h5><p>Memcached是多线程，非阻塞IO复用的网络模型Redis使用单线程的IO复用模型，在高并发场景的压力下，多线程非阻塞式IO的Memcached表现会更加优异。</p>
+<h5 id="内存管理机制"><a href="#内存管理机制" class="headerlink" title="内存管理机制"></a>内存管理机制</h5><ol>
+<li><p>Redis内存空间的利用比Memcahced更精细，引入Memcached是用一个“盒子”对数据进行承载，哪怕这个盒子的尺寸再合适，也不可避免的会有空置；</p>
+</li>
+<li><p>Memcached完美的解决了内存碎片的问题；</p>
+</li>
+<li><p>Memcached内部还存在一个slot的机制，对内存的使用优先使用废弃内存，在内存的重复利用上也具有一定的优势；</p>
+</li>
+<li><p>Redis并不是将所有内存数据都存放在内存中，只会将所有的key存放在内存，在读取的时候会有一定几率存在一次IO操作，在这一点上，Redis是使用时间换取了空间的策略；</p>
+</li>
+</ol>
+<h5 id="数据一致性保障"><a href="#数据一致性保障" class="headerlink" title="数据一致性保障"></a>数据一致性保障</h5><p>Redis提供了一个“事务”的概念，虽然这是一个假的事务，由于Redis是单进程操作，所以Redis的事务仅仅只是将一组操作按顺序进行操作，在这之间不会插入任何其他命令，从而保证数据的一致性，但是这种方式很容易造成操作阻塞。</p>
+<p>Memcached提供了类似于乐观锁一样的cas操作，会快速的返回处理成功或失败，不会对其他数据操作产生影响。在这一点上，Memcached的速度要比Redis更快也更安全。</p>
+<h5 id="二者选择策略"><a href="#二者选择策略" class="headerlink" title="二者选择策略"></a>二者选择策略</h5><p>使用Redis的String类型做的事，都可以用Memcached替换，以此换取更好的性能提升；除此以外，优先考虑Redis；</p>
+<h3 id="Redis的回收策略"><a href="#Redis的回收策略" class="headerlink" title="Redis的回收策略"></a>Redis的回收策略</h3><p><strong>MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？</strong></p>
+<p>相关知识：redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。</p>
+<p>redis提供6种数据淘汰策略：</p>
+<p>voltile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰</p>
+<p>volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰</p>
+<p>volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰</p>
+<p>allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰</p>
+<p>allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰</p>
+<p>no-enviction（驱逐）：禁止驱逐数据</p>
 
       
     </div>
@@ -660,7 +812,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-简介"><span class="nav-number">1.1.</span> <span class="nav-text">Redis 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-优势"><span class="nav-number">1.2.</span> <span class="nav-text">Redis 优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">1.3.</span> <span class="nav-text">Redis数据类型</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-优势"><span class="nav-number">1.1.</span> <span class="nav-text">Redis 优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">1.2.</span> <span class="nav-text">Redis数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis底层数据结构"><span class="nav-number">1.3.</span> <span class="nav-text">Redis底层数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单动态字符串SDS"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单动态字符串SDS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单动态字符串结构"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">简单动态字符串结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDS与C字符串的区别"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">SDS与C字符串的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">1.3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">1.3.3.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rehash"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Rehash</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渐进式rehash"><span class="nav-number">1.3.3.1.1.</span> <span class="nav-text">渐进式rehash</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳跃表"><span class="nav-number">1.3.4.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数集合"><span class="nav-number">1.3.5.</span> <span class="nav-text">整数集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩列表"><span class="nav-number">1.3.6.</span> <span class="nav-text">压缩列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis面试题"><span class="nav-number">1.4.</span> <span class="nav-text">Redis面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis实现持久化的方式"><span class="nav-number">1.4.1.</span> <span class="nav-text">redis实现持久化的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RDB"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RDB的优势"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">RDB的优势</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RDB缺点"><span class="nav-number">1.4.1.1.2.</span> <span class="nav-text">RDB缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AOF优点"><span class="nav-number">1.4.1.2.1.</span> <span class="nav-text">AOF优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AOF缺点"><span class="nav-number">1.4.1.2.2.</span> <span class="nav-text">AOF缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis与memcached对比"><span class="nav-number">1.4.2.</span> <span class="nav-text">redis与memcached对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#各方面对比"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">各方面对比</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#网络IO之间的对比"><span class="nav-number">1.4.2.1.1.</span> <span class="nav-text">网络IO之间的对比</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内存管理机制"><span class="nav-number">1.4.2.1.2.</span> <span class="nav-text">内存管理机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据一致性保障"><span class="nav-number">1.4.2.1.3.</span> <span class="nav-text">数据一致性保障</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二者选择策略"><span class="nav-number">1.4.2.1.4.</span> <span class="nav-text">二者选择策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis的回收策略"><span class="nav-number">1.4.3.</span> <span class="nav-text">Redis的回收策略</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -694,7 +846,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.3k</span>
+    <span title="Site words total count">7.1k</span>
   
 </div>
 
