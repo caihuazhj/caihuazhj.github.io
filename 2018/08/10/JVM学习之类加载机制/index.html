@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="JAVA基础," />
+  <meta name="keywords" content="JVM," />
 
 
 
@@ -77,18 +77,20 @@
 
 
 
-<meta name="description" content="面试过程中，经常会问到equals方法和==的区别，还有为什么要重写equals方法和hashCode方法，之前只是简单搜了一下，并没有彻底的理解，也记不住到底有啥区别（真是不走心）。今天在复习过程中又留意到这一点，决定仔细学习一下。 这篇主要详细写了equals，hashCode和toString方法。笔记参考 《Effective Java》 第三章 Object类Object类是所有类的祖先">
-<meta name="keywords" content="JAVA基础">
+<meta name="description" content="虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、 转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机的类加载机制。 与那些在编译时需要进行连接工作的语言不同，在Java语言里面，类型的加载、 连接和初始化过程都是在程序运行期间完成的，这种策略虽然会令类加载时稍微增加一些性能开销，但是会为Java应用程序提供高度的灵活性，Java里天生可以动态扩展的语言特性">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA基础之Object类学习及公共方法整理">
-<meta property="og:url" content="http://caihuazhj.com/2018/08/09/JAVA基础之Object类学习及公共方法整理/index.html">
+<meta property="og:title" content="JVM学习之类加载机制">
+<meta property="og:url" content="http://caihuazhj.com/2018/08/10/JVM学习之类加载机制/index.html">
 <meta property="og:site_name" content="Do What You Fell Like Fighting">
-<meta property="og:description" content="面试过程中，经常会问到equals方法和==的区别，还有为什么要重写equals方法和hashCode方法，之前只是简单搜了一下，并没有彻底的理解，也记不住到底有啥区别（真是不走心）。今天在复习过程中又留意到这一点，决定仔细学习一下。 这篇主要详细写了equals，hashCode和toString方法。笔记参考 《Effective Java》 第三章 Object类Object类是所有类的祖先">
+<meta property="og:description" content="虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、 转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机的类加载机制。 与那些在编译时需要进行连接工作的语言不同，在Java语言里面，类型的加载、 连接和初始化过程都是在程序运行期间完成的，这种策略虽然会令类加载时稍微增加一些性能开销，但是会为Java应用程序提供高度的灵活性，Java里天生可以动态扩展的语言特性">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-09T10:15:28.334Z">
+<meta property="og:image" content="http://caihuazhj.com/2018/08/10/JVM学习之类加载机制/media/0cb5665e609874d9e096d5e01b82c870.png">
+<meta property="og:updated_time" content="2018-08-10T01:29:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA基础之Object类学习及公共方法整理">
-<meta name="twitter:description" content="面试过程中，经常会问到equals方法和==的区别，还有为什么要重写equals方法和hashCode方法，之前只是简单搜了一下，并没有彻底的理解，也记不住到底有啥区别（真是不走心）。今天在复习过程中又留意到这一点，决定仔细学习一下。 这篇主要详细写了equals，hashCode和toString方法。笔记参考 《Effective Java》 第三章 Object类Object类是所有类的祖先">
+<meta name="twitter:title" content="JVM学习之类加载机制">
+<meta name="twitter:description" content="虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、 转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机的类加载机制。 与那些在编译时需要进行连接工作的语言不同，在Java语言里面，类型的加载、 连接和初始化过程都是在程序运行期间完成的，这种策略虽然会令类加载时稍微增加一些性能开销，但是会为Java应用程序提供高度的灵活性，Java里天生可以动态扩展的语言特性">
+<meta name="twitter:image" content="http://caihuazhj.com/2018/08/10/JVM学习之类加载机制/media/0cb5665e609874d9e096d5e01b82c870.png">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://caihuazhj.com/2018/08/09/JAVA基础之Object类学习及公共方法整理/"/>
+  <link rel="canonical" href="http://caihuazhj.com/2018/08/10/JVM学习之类加载机制/"/>
 
 
 
 
 
-  <title>JAVA基础之Object类学习及公共方法整理 | Do What You Fell Like Fighting</title>
+  <title>JVM学习之类加载机制 | Do What You Fell Like Fighting</title>
   
 
 
@@ -283,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://caihuazhj.com/2018/08/09/JAVA基础之Object类学习及公共方法整理/">
+    <link itemprop="mainEntityOfPage" href="http://caihuazhj.com/2018/08/10/JVM学习之类加载机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FunkyFatJian">
@@ -300,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JAVA基础之Object类学习及公共方法整理</h1>
+          <h1 class="post-title" itemprop="name headline">JVM学习之类加载机制</h1>
         
 
         <div class="post-meta">
@@ -312,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T16:04:56+08:00">
-                2018-08-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T09:15:40+08:00">
+                2018-08-10
               </time>
             
 
@@ -328,8 +330,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-09T18:15:28+08:00">
-                2018-08-09
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-10T09:29:18+08:00">
+                2018-08-10
               </time>
             
           </span>
@@ -383,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,837
+                  1,731
                 </span>
               
 
@@ -408,150 +410,95 @@
       
 
       
-        <p>面试过程中，经常会问到equals方法和==的区别，还有为什么要重写equals方法和hashCode方法，之前只是简单搜了一下，并没有彻底的理解，也记不住到底有啥区别（真是不走心）。今天在复习过程中又留意到这一点，决定仔细学习一下。</p>
-<p>这篇主要详细写了equals，hashCode和toString方法。<br>笔记参考 《Effective Java》 第三章</p>
-<h1 id="Object类"><a href="#Object类" class="headerlink" title="Object类"></a>Object类</h1><p>Object类是所有类的祖先，包括数组。</p>
-<blockquote>
-<p>虽然是一个具体类，但是设计它主要是为了拓展。它所有非final方法(equals,hashCode,toString,clone和finalize)都有明确的通用约定，因为他们被设计成是要被覆盖（override）的。                         —《EFFECTIVE JAVA 第三章》</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h2><p>默认比较的是两个对象的引用是否相等，即是否指向同一个对象（两个对象的地址是否相同）</p>
-<p><strong>什么情况下不需要重写equals方法</strong></p>
+        <p>虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、 转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机的类加载机制。</p>
+<p>与那些在编译时需要进行连接工作的语言不同，在Java语言里面，类型的加载、 连接和初始化过程都是在程序运行期间完成的，这种策略虽然会令类加载时稍微增加一些性能开<br>销，但是会为Java应用程序提供高度的灵活性，Java里天生可以动态扩展的语言特性就是依赖运行期动态加载和动态连接这个特点实现的。<br><a id="more"></a></p>
+<p><em>图片图片图片</em></p>
+<h2 id="类加载时机"><a href="#类加载时机" class="headerlink" title="类加载时机"></a>类加载时机</h2><p>针对是否会触发初始化，类加载过程分为：类的主动引用和类的被动引用</p>
+<ol>
+<li><p><strong>主动引用</strong>（一定会触发初始化）：</p>
 <ul>
-<li>类的每个实例本质上都是唯一的。</li>
-<li>不关心类是否提供了“逻辑相等”的测试功能</li>
-<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的</li>
-<li>类是私有的或是包级私有的，可以确定塔的equals方法永远不会被调用。</li>
-</ul>
-<p>&ensp;&ensp;&ensp;&ensp;当我们想利用equals方法比较值对象的引用时，希望知道他们在逻辑上是否相等，而不是想了解他们是否指向同一个对象时，就需要覆盖equals方法。</p>
-<p><strong>并且要遵循以下约定：</strong></p>
-<ul>
-<li>自反性</li>
-</ul>
-<p>&ensp;&ensp;&ensp;&ensp;举个栗子，如果违反，在collection中添加元素时，contains方法会告诉你刚才添加的元素不存在</p>
-<ul>
-<li><p>对称性</p>
+<li><p>new一个类的对象</p>
 </li>
-<li><p>传递性</p>
+<li><p>调用类的静态成员（除了final常量）和静态方法</p>
 </li>
-<li><p>一致性</p>
+<li><p>使用java.lang.reflect包的方法对类进行反射调用</p>
+</li>
+<li><p>当初始化一个类，如果其父类没有被初始化，则先初始化他的父类，</p>
+</li>
+<li><p>当要执行某个程序时，一定先启动main方法所在的类</p>
 </li>
 </ul>
-<p>&ensp;&ensp;&ensp;&ensp;相等的永远相等，不相等的永远不相等</p>
-<p><strong>高质量equals方法诀窍：</strong></p>
+</li>
+<li><p><strong>被动引用</strong>：</p>
 <ul>
-<li>使用==操作符检查“参数是否为这个对象的引用”</li>
-<li>使用instancof操作符检查“参数是否为正确的类型”</li>
-<li>把参数转换成正确的类型</li>
-<li>对于该类中的每个“关键（significant）”域，检查参数中的域是否与该对象中对应的域相匹配。</li>
+<li><p>当访问一个静态变量时，只有真正生命这个静态变量的类才会被初始化（通过子类引用父类的静态变量，不会导致子类初始化）</p>
+</li>
+<li><p>通过数组定义类应用，不会触发此类的初始化</p>
+</li>
+<li><p>引用常量(final类型)不会触发此类的初始化（常量在编译阶段就存入调用类的常量池中了）</p>
+</li>
 </ul>
-<p><strong>另外还需要考虑</strong></p>
-<ul>
-<li>对于非float和double类型的基本类型的域，可以直接使用==操作符进行比较；</li>
-<li>对于对象引用域，可以递归调用equals方法；</li>
-<li>float和double都有对应的compare方法；</li>
-<li>避免空指针异常</li>
-<li>为获得最佳性能，建议从最有可能出错的域开始比较</li>
-<li>Last But Not Least 检查是否满足equals方法的约定</li>
-</ul>
-<p><strong>最终忠告</strong></p>
-<ul>
-<li>覆盖equals方法一定要重写hashCode方法</li>
-<li>不要企图让equals方法太过智能</li>
-<li>不要将equals声明中的参数替换为其它类型</li>
-</ul>
-<h2 id="hashCode方法"><a href="#hashCode方法" class="headerlink" title="hashCode方法"></a>hashCode方法</h2><p>默认情况下hashCode返回的结果与存储地址有一定关联。（hashCode返回的就是对象的存储地址，这种看法是不全面的）</p>
-<p><strong>设计原则</strong></p>
-<ul>
-<li>在程序执行期间，只要equals方法的比较操作用到的信息没有被修改，那么对这同一个对象调用多次，hashCode方法必须始终如一地返回同一个整数。</li>
-<li>如果两个对象根据equals方法比较是相等的，那么调用两个对象的hashCode方法必须返回相同的整数结果。</li>
-<li>如果两个对象根据equals方法比较是不等的，则hashCode方法不一定得返回不同的整数。</li>
-</ul>
-<p>第一条不太好理解，《Java编程思想》中的第495页也有同第一条类似的一段话：</p>
-<blockquote>
-<p>设计hashCode()时最重要的因素就是：无论何时，对同一个对象调用hashCode()都应该产生同样的值。如果在讲一个对象用put()添加进HashMap时产生一个hashCdoe值，而用get()取出时却产生了另一个hashCode值，那么就无法获取该对象了。所以如果你的hashCode方法依赖于对象中易变的数据，用户就要当心了，因为此数据发生变化时，hashCode()方法就会生成一个不同的散列码。</p>
-</blockquote>
-<p>我们可以看一段代码<br>    package TestObject;</p>
-<pre><code>import java.util.HashMap;
-
-public class People {
-
-    private String name;
-    private int age;
-
-    public People(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode()*37+age;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return this.name.equals(((People)obj).name) &amp;&amp; this.age== ((People)obj).age;
-    }
-
-    public static void main(String[] args) {
-        People people = new People(&quot;jack&quot;,13);
-        System.out.println(people.hashCode());
-
-        HashMap&lt;People,Integer&gt; map = new HashMap&lt;&gt;();
-
-        map.put(people,1);
-        people.setAge(11);
-        System.out.println(map.get(people));
-    }
-}
-</code></pre><p>代码中，使用People的age属性进行构建hashCode方法，当改变age时，再按key去输出value时，为空。</p>
-<p>故在设计hashCode方法和equals方法的时候，如果对象中的数据易变，则最好在equals方法和hashCode方法中不要依赖于该字段。</p>
-<p>第二条讲述了为什么覆盖equals方法一定要重写hashCode方法</p>
-<p>第三条要求为不同的对象产生不同的hashCode值。通常在HashMap,HashSet,HashTable中应用比较广，他们的hashCode方法及过程要好好总结以下。<strong>next Steps</strong></p>
-<h2 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h2><p>默认输出对象地址  getClass().getName() + ‘@’ + Integer. toHexString(hashCode())</p>
-<p>建议重写</p>
-<h2 id="clone方法"><a href="#clone方法" class="headerlink" title="clone方法"></a>clone方法</h2><pre><code>protected native Object clone() throws CloneNotSupportedException;
-</code></pre><p>谨慎重写</p>
-<h2 id="finalize方法"><a href="#finalize方法" class="headerlink" title="finalize方法"></a>finalize方法</h2><p>一般不必要</p>
-<hr>
-<p>写了这么多知识点，再总结以下关于此部分的面试题</p>
-<h2 id="equals和-的区别"><a href="#equals和-的区别" class="headerlink" title="equals和==的区别"></a>equals和==的区别</h2><p>参考 <a href="https://www.cnblogs.com/dolphin0520/p/3592500.html" title="浅谈Java中的equals和==" target="_blank" rel="noopener">https://www.cnblogs.com/dolphin0520/p/3592500.html</a></p>
-<h3 id="对于操作符”-”"><a href="#对于操作符”-”" class="headerlink" title="对于操作符”==”"></a>对于操作符”==”</h3><p>《Java编程思想》中有这样一句话</p>
-<blockquote>
-<p>关系操作符生成的是一个boolean结果，它们计算的是操作数的值之间的关系</p>
-</blockquote>
-<p>对于JAVA中的基本数据类型的变量，变量直接存储的是“值”，因此在用关系操作符==来进行比较时，比较的就是 “值” 本身。要注意浮点型和整型都是有符号类型的，而char是无符号类型的（char类型取值范围为0~2^16-1)</p>
-<p>而对于非基本数据类型的变量（在一些书籍中称作为引用类型的变量）存储的并不是 “值”本身，而是于其关联的对象在内存中的地址。</p>
-<p><strong>此处引申JAVA引用类型，后记</strong></p>
-<h3 id="对于equals方法"><a href="#对于equals方法" class="headerlink" title="对于equals方法"></a>对于equals方法</h3><p>在上文中提到，在Object类中，equals方法是用来比较两个对象的引用是否相等，即是否指向同一个对象。</p>
-<p>String类对equals方法进行了重写，用来比较指向的字符串对象所存储的字符串是否相等。</p>
-<p>其他的一些类诸如Double，Date，Integer等，都对equals方法进行了重写用来比较指向的对象所存储的内容是否相等。</p>
-<h3 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h3><ol>
-<li>对于==，如果作用于基本数据类型的变量，则直接比较其存储的 “值”是否相等；</li>
+</li>
 </ol>
-<p>　　如果作用于引用类型的变量，则比较的是所指向的对象的地址</p>
-<ol start="2">
-<li>对于equals方法，注意：equals方法不能作用于基本数据类型的变量</li>
+<h2 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h2><p>JVM把class文件加载到内存，并对数据进行校验、解析和初始化，最终形成jvm可以直接使用的java类型的过程。</p>
+<ol>
+<li><p><strong>加载</strong></p>
+<p>将class文件字节码内容加载到内存中，并将这些静态数据转换成方法区中的运行时数据结构，在堆中生成一个代表这个类的java.lang.Class对象，作为方法区类数据的访问入口。</p>
+</li>
+<li><p><strong>链接</strong>将java类的二进制代码合并到jvm的运行状态之中的过程</p>
+<ol>
+<li><p><strong>验证：</strong></p>
+<p> 确保加载的类信息符合jvm规范，没有安全方面的问题。验证包括：文件格式、元数据、字节码、符号引用。</p>
+</li>
+<li><p><strong>准备：</strong></p>
+<p>正式为类变量（static变量）分配内存并设置类变量初始值的阶段，这些内存都将在方法区中进行分配。</p>
+</li>
+<li><p><strong>解析：</strong></p>
+<p>虚拟机常量池内的符号引用替换为直接引用的过程。（比如String s =”aaa”,转化为 s的地址指向“aaa”的地址）</p>
+</li>
 </ol>
-<p>　　如果没有对equals方法进行重写，则比较的是引用类型的变量所指向的对象的地址；</p>
-<p>　　诸如String、Date等类对equals方法进行了重写的话，比较的是所指向的对象的内容。</p>
+</li>
+<li><p><strong>初始化</strong></p>
+<p> 初始化阶段是执行类构造器&lt;clinit>()方法的过程。</p>
+<p> <strong>&lt;clinit>()方法影响程序运行行为的特点和细节：</strong></p>
+<ol>
+<li><p>&lt;clinit>()方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块（static块）中的语句合并产生的。</p>
+</li>
+<li><p>当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先初始化其父类的初始化。</p>
+</li>
+<li><p>&lt;clinit>()方法对于类或接口来说并不是必需的，如果一个类中没有静态语句块，也没有对变量的赋值操作，那么编译器可以不为这个类生成&lt;clinit>()方法。</p>
+<p>接口中不能使用静态语句块，但仍然有变量初始化的赋值操作，因此接口与类一样都会生成&lt;clinit>()方法。</p>
+<p>但接口与类不同的是，执行接口的&lt;clinit>()方法不需要先执行父接口的&lt;clinit>()方法。<br>只有当父接口中定义的变量使用时，父接口才会初始化。</p>
+<p>另外，接口的实现类在初始化时也一样不会执行接口的&lt;clinit>()方法。</p>
+</li>
+<li><p>虚拟机会保证一个类的&lt;clinit>()方法在多线程环境中被正确地加锁、同步，如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的&lt;clinit>()方法，其他线程都需要阻塞等待，直到活动线程执行&lt;clinit>()方法完毕。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><ol>
+<li><p><strong>虚拟机角度</strong></p>
+<p>从Java虚拟机的角度来讲，只存在两种不同的类加载器：</p>
+<p><strong>启动类加载器</strong>（Bootstrap ClassLoader），这个类加载器使用C++语言实现，是虚拟机自身的一部分；</p>
+<p><strong>其他的类加载器</strong>，这些类加载器都由Java语言实现，独立于虚拟机外部，并且全都继承自抽象类java.lang.ClassLoader。</p>
+</li>
+<li><p><strong>程序员角度</strong></p>
+<ol>
+<li><p>启动类加载器（Bootstrap<br>ClassLoader）：前面已经介绍过，这个类将器负责将存放在＜JAVA_HOME＞\lib目录中的，或者被-Xbootclasspath参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如rt.jar，名字不符合的类库即使放在lib目录中也不会被加载）类库加载到虚拟机内存中。<br>启动类加载器无法被Java程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给引导类加载器，那直接使用null代替即可。</p>
+</li>
+<li><p>扩展类加载器（Extension<br>ClassLoader）：这个加载器由sun.misc.Launcher\$ExtClassLoader实现，它负责加载＜JAVA_HOME＞\lib\ext目录中的，或者被java.ext.dirs系统变量所指定的路径中的所有类库，开发者可以直接使用扩展类加载器。</p>
+</li>
+<li><p>应用程序类加载器（Application<br>ClassLoader）：这个类加载器由sun.misc.Launcher \$AppClassLoader实现。<br>由于这个类加载器是ClassLoader中的getSystemClassLoader（）方法的返回值，所以一般也称它为系统类加载器。<br>它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>双亲委派模型</strong></p>
+<p><img src="media/0cb5665e609874d9e096d5e01b82c870.png" alt=""></p>
+<p>双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器，一般使用组合的关系来复用父加载器代码</p>
+<p><strong>逻辑：</strong></p>
+<p>先检查是否已经被加载过，若没有加载则调用父加载器的loadClass（）方法，若父加载器为空则默认使用启动类加载器作为父加载器。如果父类加载失败，抛出ClassNotFoundException异常后，再调用自己的findClass()方法进行加载。</p>
+<p><strong>附：类加载过程需要考虑哪些问题？</strong></p>
 
       
     </div>
@@ -580,7 +527,7 @@ public class People {
       
         <div class="post-tags">
           
-            <a href="/tags/JAVA基础/" rel="tag"> JAVA基础</a>
+            <a href="/tags/JVM/" rel="tag"> JVM</a>
           
         </div>
       
@@ -608,8 +555,8 @@ public class People {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/09/HashMap面试/" rel="next" title="HashMap面试">
-                <i class="fa fa-chevron-left"></i> HashMap面试
+              <a href="/2018/08/09/JVM学习之GC与内存分配策略/" rel="next" title="JVM学习之GC与内存分配策略">
+                <i class="fa fa-chevron-left"></i> JVM学习之GC与内存分配策略
               </a>
             
           </div>
@@ -617,10 +564,6 @@ public class People {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/09/JVM学习之JAVA内存区域/" rel="prev" title="JVM学习之JAVA内存区域">
-                JVM学习之JAVA内存区域 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -778,7 +721,7 @@ public class People {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object类"><span class="nav-number">1.</span> <span class="nav-text">Object类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#equals方法"><span class="nav-number">1.1.</span> <span class="nav-text">equals方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashCode方法"><span class="nav-number">1.2.</span> <span class="nav-text">hashCode方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toString方法"><span class="nav-number">1.3.</span> <span class="nav-text">toString方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clone方法"><span class="nav-number">1.4.</span> <span class="nav-text">clone方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finalize方法"><span class="nav-number">1.5.</span> <span class="nav-text">finalize方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals和-的区别"><span class="nav-number">1.6.</span> <span class="nav-text">equals和==的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对于操作符”-”"><span class="nav-number">1.6.1.</span> <span class="nav-text">对于操作符”==”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于equals方法"><span class="nav-number">1.6.2.</span> <span class="nav-text">对于equals方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终总结"><span class="nav-number">1.6.3.</span> <span class="nav-text">最终总结</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载时机"><span class="nav-number">1.</span> <span class="nav-text">类加载时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载机制"><span class="nav-number">2.</span> <span class="nav-text">类加载机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载器"><span class="nav-number">3.</span> <span class="nav-text">类加载器</span></a></li></ol></div>
             
 
           </div>
