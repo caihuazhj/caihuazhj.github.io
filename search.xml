@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>JAVA多线程之volatile关键字</title>
+      <link href="/2018/08/26/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+      <url>/2018/08/26/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97/</url>
+      <content type="html"><![CDATA[<p>通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。</p><p>volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。</p><p>在JAVA内存模型是围绕着在并发过程中如何处理<strong>原子性、可见性和有序性</strong>三个特征来建立的，分析volatile原理我们可以从这三个方向出发。<br><a id="more"></a></p><p>参考博客</p><p> <a href="http://www.cnblogs.com/paddix/p/5428507.html" target="_blank" rel="noopener"> Java 并发编程：volatile的使用及其原理 </a>     </p><p> <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p> volatile无法保证原子性，这要从内存屏障说起。<br>详细内容请参考 <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p><h5 id="浓缩如下："><a href="#浓缩如下：" class="headerlink" title="浓缩如下："></a>浓缩如下：</h5><p>内存屏障，也叫做内存栅栏，是一组处理器指令，用于实现对内存操作的顺序限制。</p><p>下面是完成上述规则所要求的内存屏障：</p><p><img src="/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png" alt="内存屏障"></p><p><strong>从Load到store到内存屏障，一共4步，其中最后一步jvm让这个最新的变量的值在所有线程可见，但中间的几步（从Load到Store）是不安全的，中间如果其他的CPU修改了值将会丢失。也就失去了原子性。</strong></p><h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>（1） 修改volatile变量时会强制将修改后的值刷新的主内存中。</p><p>（2） 修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。</p><blockquote><p>从操作系统的层面来讲：<br>对于使用volatile修饰的操作，<strong>加入volatile关键字所生成的汇编代码会多出一个LOCK前缀指令</strong>。</p><p>LOCK# 信号确保在声言该信号期间，处理器可以独占使用任何共享内存。</p><p>同时，Lock前缀指令会引起处理器缓存回写到内存，从而使其它处理器缓存无效。</p></blockquote><h3 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h3><p>关于有序性，我们需要了解一下JAVA happens-before原则。</p><ul><li>同一个线程中的，前面的操作 happen-before 后续的操作。（即单线程内按代码顺序执行。但是，在不影响在单线程环境执行结果的前提下，编译器和处理器可以进行重排序，这是合法的。换句话说，这一是规则无法保证编译重排和指令重排）。</li><li>监视器上的解锁操作 happen-before 其后续的加锁操作。（Synchronized 规则）</li><li><strong>对volatile变量的写操作 happen-before 后续的读操作。（volatile 规则）</strong></li><li>线程的start() 方法 happen-before 该线程所有的后续操作。（线程启动规则）</li><li>线程所有的操作 happen-before 其他线程在该线程上调用 join 返回成功后的操作。</li><li>如果 a happen-before b，b happen-before c，则a happen-before c（传递性）。</li></ul><p>上述的第三条就是针对volatile描述的。</p><p>为了提高性能，编译器和处理器可能会对指令做重排序。但在多线程的条件下，重排序后的语句就会出现问题。</p><p>为了实现volatile内存语义，JMM会对volatile变量限制重排序。JVM底层是使用<strong>内存屏障</strong>来实现的。</p><p>　　</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来说，volatile是并发编程中的一种优化，在某些场景下可以代替Synchronized。但是，volatile的不能完全取代Synchronized的位置，只有在一些特殊的场景下，才能适用volatile。总的来说，必须同时满足下面两个条件才能保证在并发环境的线程安全：</p><p>　　（1）对变量的写操作不依赖于当前值。</p><p>　　（2）该变量没有包含在具有其他变量的不变式中。</p>]]></content>
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> volatile </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>JAVA多线程之synchronized关键字</title>
       <link href="/2018/08/26/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bsynchronized%E5%85%B3%E9%94%AE%E5%AD%97/"/>
       <url>/2018/08/26/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B9%8Bsynchronized%E5%85%B3%E9%94%AE%E5%AD%97/</url>

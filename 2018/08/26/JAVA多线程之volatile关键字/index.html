@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="volatile," />
 
 
 
@@ -85,16 +85,20 @@
 
 
 
-<meta name="description" content="Love Jing Enjoy Life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Do What You Fell Like Fighting">
-<meta property="og:url" content="http://caihuazhj.com/archives/2018/page/2/index.html">
+<meta name="description" content="通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。 volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。 在JAVA内">
+<meta name="keywords" content="volatile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA多线程之volatile关键字">
+<meta property="og:url" content="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/index.html">
 <meta property="og:site_name" content="Do What You Fell Like Fighting">
-<meta property="og:description" content="Love Jing Enjoy Life">
+<meta property="og:description" content="通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。 volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。 在JAVA内">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png">
+<meta property="og:updated_time" content="2018-08-26T10:48:59.219Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Do What You Fell Like Fighting">
-<meta name="twitter:description" content="Love Jing Enjoy Life">
+<meta name="twitter:title" content="JAVA多线程之volatile关键字">
+<meta name="twitter:description" content="通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。 volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。 在JAVA内">
+<meta name="twitter:image" content="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png">
 
 
 
@@ -124,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://caihuazhj.com/archives/2018/page/2/"/>
+  <link rel="canonical" href="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/"/>
 
 
 
 
 
-  <title>归档 | Do What You Fell Like Fighting</title>
+  <title>JAVA多线程之volatile关键字 | Do What You Fell Like Fighting</title>
   
 
 
@@ -159,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband">
     	<a href="https://github.com/caihuazhj" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
     </div>
@@ -275,115 +279,264 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FunkyFatJian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Do What You Fell Like Fighting">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">JAVA多线程之volatile关键字</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T17:37:13+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-26T18:48:59+08:00">
+                2018-08-26
+              </time>
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 12 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,016
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。</p>
+<p>volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。</p>
+<p>在JAVA内存模型是围绕着在并发过程中如何处理<strong>原子性、可见性和有序性</strong>三个特征来建立的，分析volatile原理我们可以从这三个方向出发。<br><a id="more"></a></p>
+<p>参考博客</p>
+<p> <a href="http://www.cnblogs.com/paddix/p/5428507.html" target="_blank" rel="noopener"> Java 并发编程：volatile的使用及其原理 </a>     </p>
+<p> <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p> volatile无法保证原子性，这要从内存屏障说起。<br>详细内容请参考 <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p>
+<h5 id="浓缩如下："><a href="#浓缩如下：" class="headerlink" title="浓缩如下："></a>浓缩如下：</h5><p>内存屏障，也叫做内存栅栏，是一组处理器指令，用于实现对内存操作的顺序限制。</p>
+<p>下面是完成上述规则所要求的内存屏障：</p>
+<p><img src="/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png" alt="内存屏障"></p>
+<p><strong>从Load到store到内存屏障，一共4步，其中最后一步jvm让这个最新的变量的值在所有线程可见，但中间的几步（从Load到Store）是不安全的，中间如果其他的CPU修改了值将会丢失。也就失去了原子性。</strong></p>
+<h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>（1） 修改volatile变量时会强制将修改后的值刷新的主内存中。</p>
+<p>（2） 修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。</p>
+<blockquote>
+<p>从操作系统的层面来讲：<br>对于使用volatile修饰的操作，<strong>加入volatile关键字所生成的汇编代码会多出一个LOCK前缀指令</strong>。</p>
+<p>LOCK# 信号确保在声言该信号期间，处理器可以独占使用任何共享内存。</p>
+<p>同时，Lock前缀指令会引起处理器缓存回写到内存，从而使其它处理器缓存无效。</p>
+</blockquote>
+<h3 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h3><p>关于有序性，我们需要了解一下JAVA happens-before原则。</p>
+<ul>
+<li>同一个线程中的，前面的操作 happen-before 后续的操作。（即单线程内按代码顺序执行。但是，在不影响在单线程环境执行结果的前提下，编译器和处理器可以进行重排序，这是合法的。换句话说，这一是规则无法保证编译重排和指令重排）。</li>
+<li>监视器上的解锁操作 happen-before 其后续的加锁操作。（Synchronized 规则）</li>
+<li><strong>对volatile变量的写操作 happen-before 后续的读操作。（volatile 规则）</strong></li>
+<li>线程的start() 方法 happen-before 该线程所有的后续操作。（线程启动规则）</li>
+<li>线程所有的操作 happen-before 其他线程在该线程上调用 join 返回成功后的操作。</li>
+<li>如果 a happen-before b，b happen-before c，则a happen-before c（传递性）。</li>
+</ul>
+<p>上述的第三条就是针对volatile描述的。</p>
+<p>为了提高性能，编译器和处理器可能会对指令做重排序。但在多线程的条件下，重排序后的语句就会出现问题。</p>
+<p>为了实现volatile内存语义，JMM会对volatile变量限制重排序。JVM底层是使用<strong>内存屏障</strong>来实现的。</p>
+<p>　　</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来说，volatile是并发编程中的一种优化，在某些场景下可以代替Synchronized。但是，volatile的不能完全取代Synchronized的位置，只有在一些特殊的场景下，才能适用volatile。总的来说，必须同时满足下面两个条件才能保证在并发环境的线程安全：</p>
+<p>　　（1）对变量的写操作不依赖于当前值。</p>
+<p>　　（2）该变量没有包含在具有其他变量的不变式中。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/volatile/" rel="tag"> volatile</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
         
-        
+
         
 
         
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
           </div>
         
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/08/Redis基础/" itemprop="url">
-              
-                <span itemprop="name">Redis基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-08T15:01:13+08:00"
-              content="2018-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        </div>
+      
       
 
-        
-        
-        
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/JAVA多线程之synchronized关键字/" rel="next" title="JAVA多线程之synchronized关键字">
+                <i class="fa fa-chevron-left"></i> JAVA多线程之synchronized关键字
+              </a>
+            
+          </div>
 
-        
-        
+          <span class="post-nav-divider"></span>
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/05/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-05T21:18:12+08:00"
-              content="2018-08-05" >
-          08-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
-    </div>
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -391,6 +544,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -411,8 +568,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -532,6 +698,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原子性"><span class="nav-number">1.1.</span> <span class="nav-text">原子性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#浓缩如下："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">浓缩如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可见性"><span class="nav-number">1.2.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有序性"><span class="nav-number">1.3.</span> <span class="nav-text">有序性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -690,6 +872,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
