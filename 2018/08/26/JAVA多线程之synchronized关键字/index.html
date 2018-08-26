@@ -85,18 +85,18 @@
 
 
 
-<meta name="description" content="参考博客 http://blog.csdn.net/javazejian/article/details/72828483  参考书籍 《深入理解JAVA虚拟机》   第13章 线程安全与锁优化 应用方式synchronized关键字最主要有以下3种应用方式  修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁  修饰静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的">
+<meta name="description" content="提到JAVA线程安全，首先想到的肯定是synchronized关键字，但是仅仅将代码用synchronized修饰起来，仍然会出现很多问题。并且性能也会很差。虽然在JDK1.6之后，JAVA将代码进行了优化，但是相关原理也仍是有学习的必要的。 在面试当中，synchronized，volatile，lock也是经常会被提及，这篇博客首先总结一下synchronized。 参考书籍 《深入理解JAV">
 <meta name="keywords" content="synchronized">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA多线程之synchronized关键字">
 <meta property="og:url" content="http://caihuazhj.com/2018/08/26/JAVA多线程之synchronized关键字/index.html">
 <meta property="og:site_name" content="Do What You Fell Like Fighting">
-<meta property="og:description" content="参考博客 http://blog.csdn.net/javazejian/article/details/72828483  参考书籍 《深入理解JAVA虚拟机》   第13章 线程安全与锁优化 应用方式synchronized关键字最主要有以下3种应用方式  修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁  修饰静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的">
+<meta property="og:description" content="提到JAVA线程安全，首先想到的肯定是synchronized关键字，但是仅仅将代码用synchronized修饰起来，仍然会出现很多问题。并且性能也会很差。虽然在JDK1.6之后，JAVA将代码进行了优化，但是相关原理也仍是有学习的必要的。 在面试当中，synchronized，volatile，lock也是经常会被提及，这篇博客首先总结一下synchronized。 参考书籍 《深入理解JAV">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-26T09:27:14.750Z">
+<meta property="og:updated_time" content="2018-08-26T09:32:59.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA多线程之synchronized关键字">
-<meta name="twitter:description" content="参考博客 http://blog.csdn.net/javazejian/article/details/72828483  参考书籍 《深入理解JAVA虚拟机》   第13章 线程安全与锁优化 应用方式synchronized关键字最主要有以下3种应用方式  修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁  修饰静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的">
+<meta name="twitter:description" content="提到JAVA线程安全，首先想到的肯定是synchronized关键字，但是仅仅将代码用synchronized修饰起来，仍然会出现很多问题。并且性能也会很差。虽然在JDK1.6之后，JAVA将代码进行了优化，但是相关原理也仍是有学习的必要的。 在面试当中，synchronized，volatile，lock也是经常会被提及，这篇博客首先总结一下synchronized。 参考书籍 《深入理解JAV">
 
 
 
@@ -336,7 +336,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-26T17:27:14+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-26T17:32:59+08:00">
                 2018-08-26
               </time>
             
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,101
+                  1,209
                 </span>
               
 
@@ -416,8 +416,11 @@
       
 
       
-        <p>参考博客 <a href="http://blog.csdn.net/javazejian/article/details/72828483" title="深入理解Java并发之synchronized实现原理" target="_blank" rel="noopener">http://blog.csdn.net/javazejian/article/details/72828483 </a></p>
+        <p>提到JAVA线程安全，首先想到的肯定是synchronized关键字，但是仅仅将代码用synchronized修饰起来，仍然会出现很多问题。并且性能也会很差。虽然在JDK1.6之后，JAVA将代码进行了优化，但是相关原理也仍是有学习的必要的。</p>
+<p>在面试当中，synchronized，volatile，lock也是经常会被提及，这篇博客首先总结一下synchronized。</p>
 <p>参考书籍 《深入理解JAVA虚拟机》   第13章 线程安全与锁优化</p>
+<a id="more"></a>
+<p>参考博客 <a href="http://blog.csdn.net/javazejian/article/details/72828483" title="深入理解Java并发之synchronized实现原理" target="_blank" rel="noopener">http://blog.csdn.net/javazejian/article/details/72828483 </a></p>
 <h2 id="应用方式"><a href="#应用方式" class="headerlink" title="应用方式"></a>应用方式</h2><p>synchronized关键字最主要有以下3种应用方式</p>
 <ul>
 <li><p>修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁</p>
@@ -732,7 +735,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">16.5k</span>
+    <span title="Site words total count">16.6k</span>
   
 </div>
 
