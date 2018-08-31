@@ -90,11 +90,11 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA多线程之volatile关键字">
 <meta property="og:url" content="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/index.html">
-<meta property="og:site_name" content="Do What You Fell Like Fighting">
+<meta property="og:site_name" content="Do What You Feel Like Fighting">
 <meta property="og:description" content="通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。 volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。 在JAVA内">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://caihuazhj.com/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png">
-<meta property="og:updated_time" content="2018-08-26T10:48:59.219Z">
+<meta property="og:updated_time" content="2018-08-27T07:57:44.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA多线程之volatile关键字">
 <meta name="twitter:description" content="通过对synchronized的学习，我们可以发现它是一个重量级的锁，对系统性能有较大的影响。 volatile关键字是Java中提供的另一种解决可见性和有序性问题的方案。而对于原子性，需要强调一点，也是大家容易误解的一点：对volatile变量的单次读/写操作可以保证原子性的，如long和double类型变量，但是并不能保证i++这种操作的原子性，因为本质上i++是读、写两次操作。 在JAVA内">
@@ -134,7 +134,7 @@
 
 
 
-  <title>JAVA多线程之volatile关键字 | Do What You Fell Like Fighting</title>
+  <title>JAVA多线程之volatile关键字 | Do What You Feel Like Fighting</title>
   
 
 
@@ -176,7 +176,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Do What You Fell Like Fighting</span>
+        <span class="site-title">Do What You Feel Like Fighting</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -302,7 +302,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Do What You Fell Like Fighting">
+      <meta itemprop="name" content="Do What You Feel Like Fighting">
     </span>
 
     
@@ -338,8 +338,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-26T18:48:59+08:00">
-                2018-08-26
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-27T15:57:44+08:00">
+                2018-08-27
               </time>
             
           </span>
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,016
+                  1,055
                 </span>
               
 
@@ -424,7 +424,8 @@
 <p>参考博客</p>
 <p> <a href="http://www.cnblogs.com/paddix/p/5428507.html" target="_blank" rel="noopener"> Java 并发编程：volatile的使用及其原理 </a>     </p>
 <p> <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p> volatile无法保证原子性，这要从内存屏障说起。<br>详细内容请参考 <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p><strong> 对于所有volatile修饰的变量，它们的取值和赋值操作是原子性的。但是volatile修饰的int值进行++操作无法保证原子性原子性的。</strong></p>
+<p>这要从内存屏障说起。<br>详细内容请参考 <a href="http://www.cnblogs.com/Mainz/p/3556430.html#" target="_blank" rel="noopener">为什么volatile不能保证原子性而Atomic可以？</a></p>
 <h5 id="浓缩如下："><a href="#浓缩如下：" class="headerlink" title="浓缩如下："></a>浓缩如下：</h5><p>内存屏障，也叫做内存栅栏，是一组处理器指令，用于实现对内存操作的顺序限制。</p>
 <p>下面是完成上述规则所要求的内存屏障：</p>
 <p><img src="/2018/08/26/JAVA多线程之volatile关键字/内存屏障.png" alt="内存屏障"></p>
@@ -742,7 +743,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">17.6k</span>
+    <span title="Site words total count">17.7k</span>
   
 </div>
 
